@@ -1,0 +1,36 @@
+services:
+  hadoop-master:
+    image: adamgput/hadoop-pyspark-put:1.0
+    container_name: hadoop-master
+    hostname: hadoop-master
+    ports:
+      - "9864:9864"
+      - "9870:9870"
+      - "8088:8088"
+      - "8888:8888"
+    volumes:
+      - ./app:/app    
+    stdin_open: true
+    tty: true
+
+  hadoop-slave1:
+    image: adamgput/hadoop-pyspark-put:1.0
+    container_name: hadoop-slave1
+    hostname: hadoop-slave1 
+    depends_on:
+      - hadoop-master
+    volumes:
+      - ./app:/app
+    stdin_open: true
+    tty: true
+
+  hadoop-slave2:
+    image: adamgput/hadoop-pyspark-put:1.0
+    container_name: hadoop-slave2
+    hostname: hadoop-slave2 
+    depends_on:
+      - hadoop-master
+    volumes:
+      - ./app:/app
+    stdin_open: true
+    tty: true
